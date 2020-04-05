@@ -10,6 +10,14 @@ env:
   - PACKAGE_VERSION=0.0.1
 jobs:
   include:
+  - stage: OSX test
+    os: osx
+    osx_image: xcode11.3
+    language: swift
+    script:
+    - xcodebuild -scheme CRC test -enableCodeCoverage YES
+    after_success:
+    - bash <(curl -s https://codecov.io/bash) -X xcodellvm
   - stage: Linux test
     os: linux
     language: generic
@@ -25,11 +33,4 @@ jobs:
     script:
     - swift package update
     - swift test
-  - stage: OSX test
-    os: osx
-    osx_image: xcode11.3
-    language: swift
-    script:
-    - xcodebuild -scheme CRC test -enableCodeCoverage YES
-    after_success:
-    - bash <(curl -s https://codecov.io/bash) -X xcodellvm
+
