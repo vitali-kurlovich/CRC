@@ -21,9 +21,8 @@ struct CRC {
 
 extension CRC {
     public mutating
-    func update(_ b: UInt32) {
-        let index = Int((value ^ b) & 0xFF)
-        value = table[index] ^ (value >> 8)
+    func update(_ b: UInt8) {
+        update(CollectionOfOne(b))
     }
 
     public mutating
