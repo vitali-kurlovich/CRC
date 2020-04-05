@@ -10,21 +10,23 @@ struct CRC {
     }
 
     public mutating
-    func update<S: Sequence>(_ data: S) where S.Element == UInt8 {
-        for element in data {
-            let item = UInt32(element)
-            let index = Int((value ^ item) & 0xFF)
-            value = table[index] ^ (value >> 8)
-        }
+    func update(_ element: UInt8) {
+        let item = UInt32(element)
+        let index = Int((value ^ item) & 0xFF)
+        value = table[index] ^ (value >> 8)
     }
 }
 
 extension CRC {
     public mutating
-    func update(_ b: UInt8) {
-        update(CollectionOfOne(b))
+    func update<S: Sequence>(_ data: S) where S.Element == UInt8 {
+        for element in data {
+            update(element)
+        }
     }
+}
 
+extension CRC {
     public mutating
     func update(_ data: [UInt8], offset: Int, size: Int) {
         let startIndex = data.index(data.startIndex, offsetBy: offset)
