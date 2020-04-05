@@ -6,7 +6,7 @@ env:
   global:
   - SWIFT_BRANCH=swift-5.2-release
   - SWIFT_VERSION=swift-5.2-RELEASE
-  #- CODECOV_TOKEN="13ed7985-b6cd-4495-b33f-19f943e055c4"
+  - CODECOV_TOKEN="d7a367d7-f9fa-4528-ab12-77c079132de8"
   - PACKAGE_VERSION=0.0.1
 jobs:
   include:
@@ -36,5 +36,5 @@ jobs:
     - export PATH="/Library/Developer/Toolchains/$SWIFT_VERSION.xctoolchain/usr/bin:$PATH"
     script:
     - xcodebuild -scheme CRC test -enableCodeCoverage YES
-    #after_success:
-    #- bash <(curl -s https://codecov.io/bash) -X xcodellvm
+    after_success:
+    - bash <(curl -s https://codecov.io/bash) -X xcodellvm
